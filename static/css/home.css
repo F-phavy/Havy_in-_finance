@@ -1,0 +1,61 @@
+:root {
+    --primary-blue: #1e3a8a;
+    --secondary-blue: #3b82f6;
+    --bg-gray: #f1f5f9;
+    --white: #ffffff;
+}
+
+body {
+    background-color: var(--bg-gray);
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.home {
+    background: var(--white);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+    border-top: 8px solid var(--primary-blue);
+}
+
+h2 {
+    color: var(--primary-blue);
+    margin-bottom: 30px;
+    font-size: 2rem;
+}
+
+.reg, .log {
+    margin: 15px 0;
+}
+
+/* Turning your links into Blue Buttons */
+.home a, a[href*="expenses"] {
+    display: block;
+    background-color: var(--secondary-blue);
+    color: white !important;
+    text-decoration: none;
+    padding: 15px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.home a:hover, a[href*="expenses"]:hover {
+    background-color: var(--primary-blue);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(30, 58, 138, 0.3);
+}
+
+/* Style for the 'Welcome User' text */
+.home h2 {
+    font-size: 1.5rem;
+}

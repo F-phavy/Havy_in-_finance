@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+{% block content %}
+    <div class="img">
+        <img src="{% static 'images/logo.png' %}" alt="Logo" style="max-width: 150px;">
+    </div>
+
+    <div class="main">
+        <div class="expense">
+            <h2>Expenses List</h2>
+            <div class="expenses-scroll-container">
+                <div class="expenses">
+                    {% for year_month, expenses in expense_data.items %}
+                        <div class="month">
+                            <h3> Month: {{ year_month }} </h3>
+                            {% for expense in expenses %}
+                                <div class="exp_list">
+                                    <div class="left">
+                                        <h2>{{ expense.name }}</h2>
+                                        {% if expense.long_term %}
+                                            <span class="date"> From: {{ expense.date }} | To: {{ expense.end_date }} </span>
+                                        {% else %}
+                                            <span class="date"> Date: {{ expense.date }} </span>
+                                        {% endif %}
+                                    </div>
+                                    <div class="right">
+                                        <h2>${{ expense.amount }}</h2>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %} 
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <div id="plotly-chart"></div>
+        </div>
+    </div>
+
+    <div class="lower">
+        <div class="exp_form">
+            <h2> Add Long Term Liability Or One Time Expense </h2>
+            <form method="post" action="/expenses/"> 
+                {% csrf_token %}
+
+                {% if form.errors %}
+                    <div style="color: red; border: 1px solid red; padding: 10px; margin-bottom: 10px;">
+                        {{ form.errors }}
+                    </div>
+                {% endif %}
+
+                {{ form.long_term.label_tag }} {{ form.long_term }}
+                <br><br>
+                {{ form.name.label_tag }} {{ form.name }}
+                {{ form.amount.label_tag }} {{ form.amount }}
+                <br><br>
+                {{ form.date.label_tag }} {{ form.date }}
+                <br><br>
+
+                <div id="end_date">
+                    {{ form.end_date.label_tag }} {{ form.end_date }}
+                </div>
+                <br>
+                <div id="interest_rate">
+                    {{ form.interest_rate.label_tag }} {{ form.interest_rate }}
+                </div>
+                <br>
+                <button type="submit" class="btn btn-success"> Add Liability </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        var graphData = {{ graph_data|safe }};
+        
+        if (graphData && graphData.data) {
+            
+            graphData.layout.autosize = true;
+            graphData.layout.paper_bgcolor = '#ffffff'; 
+            graphData.layout.plot_bgcolor = '#ffffff';
+            graphData.layout.font = { color: '#1e3a8a' };
+
+            if (graphData.data.length > 0) {
+                graphData.data[0].marker = { color: '#3b82f6' }; 
+            }
+
+            Plotly.newPlot('plotly-chart', graphData.data, graphData.layout, {responsive: true});
+        }
+    </script> 
+{% endblock %}
+</body>
