@@ -5,11 +5,10 @@
 {% block content %}
 
 {% if form.errors %}
-  <p> Your Username and Password didn't match. Please Try Again </p>
-  {% endif %}
+  <p style="color: red; text-align: center;"> Your Username and Password didn't match. Please Try Again </p>
+{% endif %}
 
-<form method="post" action="{% url 'login' %}">
-    {% csrf_token %}
+<form method="post"> {% csrf_token %}
     <div class="container">
         <div class="form-container">
             <div class="form">
@@ -19,14 +18,16 @@
                 <br><br>
                 {{form.password.label_tag}}
                 {{form.password}}
-                
             </div>
             <br>
             <div class="button-container">
                 <button class="btn btn-primary" type="submit">
-                    Register
+                    Sign In
                 </button>
             </div>
+            <p style="text-align: center; margin-top: 10px;">
+                Don't have an account? <a href="{% url 'register' %}">Create one here</a>
+            </p>
         </div>
     </div>
 </form>

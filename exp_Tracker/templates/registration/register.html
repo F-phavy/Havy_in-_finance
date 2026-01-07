@@ -10,7 +10,7 @@
             <div class="form">
                 <h2 style="text-align: center;">Sign Up</h2>
                 {{form.username.label_tag}}
-                 <br>
+                <br>
                 {{form.username}}
                 <br>
                 {{form.password1.label_tag}}
@@ -23,8 +23,11 @@
             </div>
             <br>
             <div class="button-container">
-                <input class="btn btn-primary" type="submit" value="Login"/>
+                <input class="btn btn-primary" type="submit" value="Register"/>
             </div>
+            <p style="text-align: center; margin-top: 10px;">
+                Already have an account? <a href="{% url 'login' %}">Login here</a>
+            </p>
         </div>
     </div>
 </form>
